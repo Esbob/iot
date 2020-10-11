@@ -1,27 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Iot.Device.QwiicTwist.RegisterMapping;
 
-namespace QwiicTwist
+namespace Iot.Device.QwiicTwist
 {
-    /// <summary>
-    /// TODO
-    /// </summary>
     public sealed partial class QwiicTwist
     {
+        /// <summary>
+        /// Returns the number of indents the user has turned the knob.
+        /// The encoder has 24 indents per rotation.
+        /// </summary>
+        public short GetCount()
+        {
+            return _registerAccess.ReadRegister<short>(Register.Count);
+        }
+
+        /// <summary>
+        /// Sets the number of indents to a given amount.
+        /// </summary>
+        public void SetCount(short amount)
+        {
+            // TODO: Cast is probably not good
+            // Fix by implementing a _registerAccess.WriteRegister<short> method
+            _registerAccess.WriteDoubleRegister(Register.Count, (ushort)amount);
+        }
+
         /*
-        //Returns the number of indents the user has turned the knob
-        int16_t TWIST::getCount()
-        {
-            return (readRegister16(TWIST_COUNT));
-        }
-
-        //Set the number of indents to a given amount
-        boolean TWIST::setCount(int16_t amount)
-        {
-            return (writeRegister16(TWIST_COUNT, amount));
-        }
-
         //Returns the limit of allowed counts before wrapping
         //0 is disabled
         uint16_t TWIST::getLimit()

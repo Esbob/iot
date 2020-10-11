@@ -9,15 +9,18 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
 {
     internal struct StatusRegisterBitField
     {
-        // const byte statusButtonClickedBit = 2;
-        // const byte statusButtonPressedBit = 1;
-        // const byte statusEncoderMovedBit = 0;
+        // TODO
+        // If doesn't work, from docs:
+        // buttonPressed(3),
+        // buttonClicked(2),
+        // buttonInterrupt(1),
+        // encoderInterrupt(0).
         [Flags]
         private enum StatusRegisterBits
         {
-            EventAvailable = 1,
-            HasBeenClicked = 2,
-            IsPressed = 4,
+            EncoderTurned = 0,
+            ButtonPressed = 1,
+            ButtonClicked = 2
         }
 
         private StatusRegisterBits _statusRegisterValue;
@@ -30,32 +33,33 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
         public byte StatusRegisterValue => (byte)_statusRegisterValue;
 
         /// <summary>
-        /// Gets set to true when a new event occurs.
+        /// Gets set to true if the encoder is turned.
         /// Must be manually set to false to clear the flag.
         /// </summary>
-        public bool EventAvailable
+        public bool IsEncoderTurned
         {
-            get { return FlagsHelper.IsSet(_statusRegisterValue, StatusRegisterBits.EventAvailable); }
-            set { FlagsHelper.SetValue(ref _statusRegisterValue, StatusRegisterBits.EventAvailable, value); }
+            get { return FlagsHelper.IsSet(_statusRegisterValue, StatusRegisterBits.EncoderTurned); }
+            set { FlagsHelper.SetValue(ref _statusRegisterValue, StatusRegisterBits.EncoderTurned, value); }
         }
 
         /// <summary>
-        /// Gets set to true if button is pushed.
+        /// Gets set to true if the button is pressed.
+        /// Must be manually set to false to clear the flag.
         /// </summary>
-        public bool IsPressed
+        public bool IsButtonPressed
         {
-            get { return FlagsHelper.IsSet(_statusRegisterValue, StatusRegisterBits.IsPressed); }
-            set { FlagsHelper.SetValue(ref _statusRegisterValue, StatusRegisterBits.IsPressed, value); }
+            get { return FlagsHelper.IsSet(_statusRegisterValue, StatusRegisterBits.ButtonPressed); }
+            set { FlagsHelper.SetValue(ref _statusRegisterValue, StatusRegisterBits.ButtonPressed, value); }
         }
 
         /// <summary>
         /// Gets set to true when the button gets clicked.
         /// Must be manually set to false to clear the flag.
         /// </summary>
-        public bool HasBeenClicked
+        public bool IsButtonClicked
         {
-            get { return FlagsHelper.IsSet(_statusRegisterValue, StatusRegisterBits.HasBeenClicked); }
-            set { FlagsHelper.SetValue(ref _statusRegisterValue, StatusRegisterBits.HasBeenClicked, value); }
+            get { return FlagsHelper.IsSet(_statusRegisterValue, StatusRegisterBits.ButtonClicked); }
+            set { FlagsHelper.SetValue(ref _statusRegisterValue, StatusRegisterBits.ButtonClicked, value); }
         }
     }
 }

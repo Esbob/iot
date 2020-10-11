@@ -3,10 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
-using System.Device.Gpio;
-using System.Device.I2c;
-using System.Device.Spi;
-using System.Threading;
 
 namespace Iot.Device.QwiicTwist.Samples
 {

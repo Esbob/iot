@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace QwiicTwist
+namespace Iot.Device.QwiicTwist
 {
     /// <summary>
     /// TODO
