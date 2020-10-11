@@ -18,9 +18,7 @@ namespace Iot.Device.QwiicTwist
         /// </summary>
         public void SetCount(short amount)
         {
-            // TODO: Cast is probably not good
-            // Fix by implementing a _registerAccess.WriteRegister<short> method
-            _registerAccess.WriteDoubleRegister(Register.Count, (ushort)amount);
+            _registerAccess.WriteRegister(Register.Count, amount);
         }
 
         /*
