@@ -3,7 +3,6 @@
 //// See the LICENSE file in the project root for more information.
 
 using System;
-using Iot.Device.Common;
 
 namespace Iot.Device.QwiicTwist.RegisterMapping
 {
@@ -19,7 +18,7 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
         private enum StatusRegisterBits
         {
             EncoderTurned = 0,
-            ButtonPressed = 1,
+            ButtonPressedDown = 1,
             ButtonClicked = 2
         }
 
@@ -46,10 +45,10 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
         /// Gets set to true if the button is pressed.
         /// Must be manually set to false to clear the flag.
         /// </summary>
-        public bool IsButtonPressed
+        public bool IsButtonPressedDown
         {
-            get { return FlagsHelper.IsSet(_statusRegisterValue, StatusRegisterBits.ButtonPressed); }
-            set { FlagsHelper.SetValue(ref _statusRegisterValue, StatusRegisterBits.ButtonPressed, value); }
+            get { return FlagsHelper.IsSet(_statusRegisterValue, StatusRegisterBits.ButtonPressedDown); }
+            set { FlagsHelper.SetValue(ref _statusRegisterValue, StatusRegisterBits.ButtonPressedDown, value); }
         }
 
         /// <summary>

@@ -1,4 +1,9 @@
-﻿using Iot.Device.QwiicTwist.RegisterMapping;
+﻿// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+// See the LICENSE file in the project root for more information.
+
+using System;
+using Iot.Device.QwiicTwist.RegisterMapping;
 
 namespace Iot.Device.QwiicTwist
 {
@@ -10,10 +15,10 @@ namespace Iot.Device.QwiicTwist
         /// </summary>
         public bool IsPressed()
         {
-            var status = new StatusRegisterBitField(_registerAccess.ReadSingleRegister(Register.Status));
-            var isButtonPressed = status.IsButtonPressed;
-            status.IsButtonPressed = false;
-            _registerAccess.WriteSingleRegister(Register.Status, status.StatusRegisterValue); // We've read this status bit, now clear it
+            var status = new StatusRegisterBitField(_registerAccess.ReadRegister<byte>(Register.Status));
+            var isButtonPressed = status.IsButtonPressedDown;
+            status.IsButtonPressedDown = false;
+            _registerAccess.WriteRegister(Register.Status, status.StatusRegisterValue); // We've read this status bit, now clear it
             return isButtonPressed;
         }
 
@@ -23,26 +28,27 @@ namespace Iot.Device.QwiicTwist
         /// </summary>
         public bool IsClicked()
         {
-            var status = new StatusRegisterBitField(_registerAccess.ReadSingleRegister(Register.Status));
+            var status = new StatusRegisterBitField(_registerAccess.ReadRegister<byte>(Register.Status));
             var isButtonClicked = status.IsButtonClicked;
             status.IsButtonClicked = false;
-            _registerAccess.WriteSingleRegister(Register.Status, status.StatusRegisterValue); // We've read this status bit, now clear it
+            _registerAccess.WriteRegister(Register.Status, status.StatusRegisterValue); // We've read this status bit, now clear it
             return isButtonClicked;
         }
 
         /// <summary>
-        /// Returns the number of milliseconds since the last button event (press and release).
+        /// Returns interval of time since the last button event (press and release).
+        /// If called when no event has occurred then returns ??? TODO
         /// </summary>
         /// <param name="clearValue"><see langword="true"/> if the value should subsequently be cleared; <see langword="false"/> otherwise.</param>
-        public ushort TimeSinceLastPress(bool clearValue = false)
+        public TimeSpan GetTimeSinceLastPress(bool clearValue = false)
         {
-            ushort timeElapsed = _registerAccess.ReadDoubleRegister(Register.LastButtonEvent);
+            ushort timeElapsed = _registerAccess.ReadRegister<ushort>(Register.LastButtonEvent);
             if (clearValue)
             {
-                _registerAccess.WriteDoubleRegister(Register.LastButtonEvent, 0);
+                _registerAccess.WriteRegister<ushort>(Register.LastButtonEvent, 0);
             }
 
-            return timeElapsed;
+            return TimeSpan.FromMilliseconds(timeElapsed);
         }
     }
 }

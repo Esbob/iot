@@ -15,10 +15,8 @@ namespace Iot.Device.QwiicTwist.Samples
         {
             Console.WriteLine("Qwiic Twist Configuration");
             Console.WriteLine("--------------------------");
-            Console.WriteLine($"I2C bus ID: {twist.I2cBusId}");
-            Console.WriteLine($"I2C bus address: 0x{twist.I2cAddress:X} (decimal: {twist.I2cAddress})");
             Console.WriteLine($"Device ID: {twist.GetDeviceId()}");
-            Console.WriteLine($"Firmware version: {twist.GetFirmwareVersionAsInteger()} ({twist.GetFirmwareVersionAsString()})");
+            Console.WriteLine($"Firmware version: {twist.GetFirmwareVersion()}");
         }
     }
 }

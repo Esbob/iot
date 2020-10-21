@@ -4,7 +4,6 @@
 
 using System;
 using System.Device.I2c;
-using Iot.Device.Common;
 using Iot.Device.QwiicTwist.RegisterMapping;
 
 namespace Iot.Device.QwiicTwist
@@ -25,65 +24,57 @@ namespace Iot.Device.QwiicTwist
         /// <param name="i2cAddress">I2C bus address of the Twist (default=0x3F).</param>
         public QwiicTwist(int i2cBusId, byte i2cAddress = DefaultAddress)
         {
-            I2cBusId = i2cBusId;
-            I2cAddress = i2cAddress;
             var settings = new I2cConnectionSettings(i2cBusId, i2cAddress);
             var device = I2cDevice.Create(settings);
-            _registerAccess = new I2cRegisterAccess<Register>(device);
+            _registerAccess = new I2cRegisterAccess<Register>(device, useLittleEndian: true);
         }
 
         /// <summary>
-        /// I2C bus ID the Twist is connected to.
+        /// Initializes a new instance of the <see cref="QwiicTwist"/> class.
         /// </summary>
-        public int I2cBusId { get; set; }
+        /// <param name="i2cDevice">Qwiic Twist communications channel.</param>
+        public QwiicTwist(I2cDevice i2cDevice)
+        {
+            if (i2cDevice == null)
+            {
+                throw new ArgumentNullException(nameof(i2cDevice));
+            }
 
-        /// <summary>
-        /// I2C bus address of the Twist.
-        /// </summary>
-        public byte I2cAddress { get; set; }
+            _registerAccess = new I2cRegisterAccess<Register>(i2cDevice, useLittleEndian: true);
+        }
 
         /// <summary>
         /// Returns the 8-bit device ID of the Twist.
         /// </summary>
         public byte GetDeviceId()
         {
-            return _registerAccess.ReadSingleRegister(Register.Id);
+            return _registerAccess.ReadRegister<byte>(Register.Id);
         }
 
         /// <summary>
-        /// Returns the firmware version of the Twist as a 16-bit integer.
-        /// The leftmost (high) byte is the major revision number, and the rightmost (low) byte is
-        /// the minor revision number.
+        /// Returns the firmware version of the Twist.
         /// </summary>
-        public ushort GetFirmwareVersionAsInteger()
+        public Version GetFirmwareVersion()
         {
-            ushort version = (ushort)(_registerAccess.ReadSingleRegister(Register.FirmwareMajor) << 8);
-            version |= _registerAccess.ReadSingleRegister(Register.FirmwareMinor);
-            return version;
-        }
-
-        /// <summary>
-        /// Returns the firmware version of the Twist as a [major revision].[minor revision] string.
-        /// </summary>
-        public string GetFirmwareVersionAsString()
-        {
-            var major = _registerAccess.ReadSingleRegister(Register.FirmwareMajor);
-            var minor = _registerAccess.ReadSingleRegister(Register.FirmwareMinor);
-            return major + "." + minor;
+            var major = _registerAccess.ReadRegister<byte>(Register.FirmwareMajor);
+            var minor = _registerAccess.ReadRegister<byte>(Register.FirmwareMinor);
+            return new Version(major, minor);
         }
 
         /// <summary>
         /// Configures the Twist to attach to the I2C bus using the specified address.
+        /// Since this operation does not update the configuration of the underlying <see cref="I2cDevice"/>,
+        /// the <see cref="QwiicTwist"/> instance is subsequently misconfigured and thus actively disposed.
         /// </summary>
-        public void SetI2cAddress(byte address)
+        public void ChangeI2cAddressAndDispose(byte address)
         {
             if (address < 0x08 || address > 0x77)
             {
                 throw new ArgumentOutOfRangeException(nameof(address), "I2C input address must be between 0x08 and 0x77");
             }
 
-            _registerAccess.WriteSingleRegister(Register.I2cAddress, address);
-            I2cAddress = address;
+            _registerAccess.WriteRegister(Register.I2cAddress, address);
+            Dispose();
         }
 
         // TODO
