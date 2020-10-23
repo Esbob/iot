@@ -77,12 +77,13 @@ namespace Iot.Device.QwiicTwist
             Dispose();
         }
 
-        // TODO
-        // Clears the moved, clicked, and pressed bits
-        // void TWIST::clearInterrupts()
-        // {
-        //    writeRegister(TWIST_STATUS, 0); //Clear the moved, clicked, and pressed bits
-        // }
+        /// <summary>
+        /// Clears the turned, clicked, and pressed down bits, see <see cref="StatusRegisterBitField"/>.
+        /// </summary>
+        public void ClearStatusFlags()
+        {
+            _registerAccess.WriteRegister<byte>(Register.Status, 0);
+        }
 
         /// <inheritdoc />
         public void Dispose()
