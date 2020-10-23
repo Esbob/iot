@@ -26,6 +26,6 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
         TWIST_CONNECT_BLUE = 0x14,
         TWIST_TURN_INT_TIMEOUT = 0x16,
         I2cAddress = 0x18,
-        TWIST_LIMIT = 0x19
+        Limit = 0x19
     }
 }

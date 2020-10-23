@@ -10,6 +10,7 @@ namespace Iot.Device.QwiicTwist
     {
         /// <summary>
         /// Returns the number of indents the user has turned the knob.
+        /// Value between -32,768 and 32,767.
         /// The encoder has 24 indents per rotation.
         /// </summary>
         public short GetCount()
@@ -19,26 +20,35 @@ namespace Iot.Device.QwiicTwist
 
         /// <summary>
         /// Sets the number of indents to a given amount.
+        /// Value between -32,768 and 32,767.
+        /// The encoder has 24 indents per rotation.
         /// </summary>
         public void SetCount(short amount)
         {
             _registerAccess.WriteRegister(Register.Count, amount);
         }
 
+        /// <summary>
+        /// Returns the limit of allowed counts before wrapping.
+        /// Value between 0 and 65,535.
+        /// 0 means disabled.
+        /// </summary>
+        public ushort GetLimit()
+        {
+            return _registerAccess.ReadRegister<ushort>(Register.Limit);
+        }
+
+        /// <summary>
+        /// Sets the limit of what the encoder will go to, then wrap to 0.
+        /// Value between 0 and 65,535.
+        /// Set to 0 to disable.
+        /// </summary>
+        public void SetLimit(ushort amount)
+        {
+            _registerAccess.WriteRegister(Register.Limit, amount);
+        }
+
         /*
-        //Returns the limit of allowed counts before wrapping
-        //0 is disabled
-        uint16_t TWIST::getLimit()
-        {
-            return (readRegister16(TWIST_LIMIT));
-        }
-
-        //Sets the limit of what the encoder will go to, then wrap to 0. Set to 0 to disable.
-        boolean TWIST::setLimit(uint16_t amount)
-        {
-            return (writeRegister16(TWIST_LIMIT, amount));
-        }
-
         //Returns true if knob has been turned
         boolean TWIST::isMoved()
         {
