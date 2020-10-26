@@ -24,7 +24,7 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
         TWIST_CONNECT_RED = 0x10, // Amount to change red LED for each encoder tick
         TWIST_CONNECT_GREEN = 0x12,
         TWIST_CONNECT_BLUE = 0x14,
-        TWIST_TURN_INT_TIMEOUT = 0x16,
+        TurnInterruptTimeout = 0x16,
         I2cAddress = 0x18,
         Limit = 0x19
     }

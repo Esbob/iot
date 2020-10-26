@@ -78,13 +78,16 @@ namespace Iot.Device.QwiicTwist
             return TimeSpan.FromMilliseconds(timeElapsed);
         }
 
-        /*
-        //Gets number of milliseconds that must elapse between end of knob turning and interrupt firing
-        uint16_t TWIST::getIntTimeout()
+        /// <summary>
+        /// Returns interval of time that must elapse between end of knob turning and interrupt firing.
+        /// </summary>
+        public TimeSpan GetTurnInterruptTimeout()
         {
-            return (readRegister16(TWIST_TURN_INT_TIMEOUT));
+            var timeout = _registerAccess.ReadRegister<ushort>(Register.TurnInterruptTimeout);
+            return TimeSpan.FromMilliseconds(timeout);
         }
 
+        /*
         //Sets number of milliseconds that must elapse between end of knob turning and interrupt firing
         boolean TWIST::setIntTimeout(uint16_t timeout)
         {
