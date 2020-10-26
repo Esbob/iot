@@ -42,7 +42,7 @@ namespace Iot.Device.QwiicTwist
         /// <summary>
         /// Sets the limit of what the encoder will go to, then wrap to 0.
         /// Value between 0 and 65,535.
-        /// Set to 0 to disable.
+        /// Set to 0 to disable. TODO: What happens then?
         /// </summary>
         public void SetLimit(ushort amount)
         {
@@ -87,13 +87,17 @@ namespace Iot.Device.QwiicTwist
             return TimeSpan.FromMilliseconds(timeout);
         }
 
-        /*
-        //Sets number of milliseconds that must elapse between end of knob turning and interrupt firing
-        boolean TWIST::setIntTimeout(uint16_t timeout)
+        /// <summary>
+        /// Sets the number of milliseconds that must elapse between end of knob turning and interrupt firing.
+        /// Value between 0 and 65,535.
+        /// Set to 0 to disable timeout.
+        /// </summary>
+        public void SetInterruptTimeout(ushort timeout)
         {
-            return (writeRegister16(TWIST_TURN_INT_TIMEOUT, timeout));
+            _registerAccess.WriteRegister(Register.TurnInterruptTimeout, timeout);
         }
 
+        /*
         //Returns the number of ticks since last check
         int16_t TWIST::getDiff(boolean clearValue)
         {
