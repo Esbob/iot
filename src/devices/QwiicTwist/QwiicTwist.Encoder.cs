@@ -48,18 +48,19 @@ namespace Iot.Device.QwiicTwist
             _registerAccess.WriteRegister(Register.Limit, amount);
         }
 
-        /*
-        //Returns true if knob has been turned
-        boolean TWIST::isMoved()
+        /// <summary>
+        /// Returns whether the knob has been turned.
+        /// </summary>
+        public bool IsEncoderTurned()
         {
-            byte status = readRegister(TWIST_STATUS);
-            boolean moved = status & (1 << statusEncoderMovedBit);
-
-            writeRegister(TWIST_STATUS, status & ~(1 << statusEncoderMovedBit)); //We've read this status bit, now clear it
-
-            return (moved);
+            var status = new StatusRegisterBitField(_registerAccess.ReadRegister<byte>(Register.Status));
+            var isEncoderTurned = status.IsEncoderTurned;
+            status.IsEncoderTurned = false;
+            _registerAccess.WriteRegister(Register.Status, status.StatusRegisterValue); // We've read this status bit, now clear it
+            return isEncoderTurned;
         }
 
+        /*
         //Returns the number of milliseconds since the last encoder movement
         //By default, clears the current value
         uint16_t TWIST::timeSinceLastMovement(boolean clearValue)
