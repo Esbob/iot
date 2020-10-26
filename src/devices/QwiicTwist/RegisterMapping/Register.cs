@@ -16,7 +16,7 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
         TWIST_ENABLE_INTS = 0x04, // 1 - button interrupt, 0 - encoder interrupt
         Count = 0x05,
         TWIST_DIFFERENCE = 0x07,
-        TWIST_LAST_ENCODER_EVENT = 0x09, // Millis since last movement of knob
+        LastEncoderEvent = 0x09,
         LastButtonEvent = 0x0B,  // Millis since last press/release
         TWIST_RED = 0x0D,
         TWIST_GREEN = 0x0E,

@@ -37,10 +37,11 @@ namespace Iot.Device.QwiicTwist
 
         /// <summary>
         /// Returns interval of time since the last button event (press and release).
+        /// By default, clears the current value.
         /// If called when no event has occurred then returns ??? TODO
         /// </summary>
         /// <param name="clearValue"><see langword="true"/> if the value should subsequently be cleared; <see langword="false"/> otherwise.</param>
-        public TimeSpan GetTimeSinceLastPress(bool clearValue = false)
+        public TimeSpan GetTimeSinceLastPress(bool clearValue = true)
         {
             ushort timeElapsed = _registerAccess.ReadRegister<ushort>(Register.LastButtonEvent);
             if (clearValue)

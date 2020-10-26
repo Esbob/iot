@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using Iot.Device.QwiicTwist.RegisterMapping;
 
 namespace Iot.Device.QwiicTwist
@@ -60,20 +61,24 @@ namespace Iot.Device.QwiicTwist
             return isEncoderTurned;
         }
 
-        /*
-        //Returns the number of milliseconds since the last encoder movement
-        //By default, clears the current value
-        uint16_t TWIST::timeSinceLastMovement(boolean clearValue)
+        /// <summary>
+        /// Returns interval of time since last encoder movement.
+        /// By default, clears the current value.
+        /// If called when no event has occurred then returns ??? TODO
+        /// </summary>
+        /// <param name="clearValue"><see langword="true"/> if the value should subsequently be cleared; <see langword="false"/> otherwise.</param>
+        public TimeSpan GetTimeSinceLastMovement(bool clearValue = true)
         {
-            uint16_t timeElapsed = readRegister16(TWIST_LAST_ENCODER_EVENT);
+            var timeElapsed = _registerAccess.ReadRegister<ushort>(Register.LastEncoderEvent);
+            if (clearValue)
+            {
+                _registerAccess.WriteRegister<ushort>(Register.LastEncoderEvent, 0);
+            }
 
-            //Clear the current value if requested
-            if (clearValue == true)
-                writeRegister16(TWIST_LAST_ENCODER_EVENT, 0);
-
-            return (timeElapsed);
+            return TimeSpan.FromMilliseconds(timeElapsed);
         }
 
+        /*
         //Gets number of milliseconds that must elapse between end of knob turning and interrupt firing
         uint16_t TWIST::getIntTimeout()
         {
