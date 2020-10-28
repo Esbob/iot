@@ -20,7 +20,7 @@ namespace Iot.Device.QwiicTwist.Samples
             {
                 while (!Console.KeyAvailable)
                 {
-                    Console.WriteLine($"Indents count: {twist.GetCount()}");
+                    Console.WriteLine($"Indents count: {twist.GetTurnCount()}");
 
                     // Check if Twist is pressed, and tell us if it is!
                     if (twist.IsPressed())

@@ -14,7 +14,7 @@ namespace Iot.Device.QwiicTwist
         /// Value between -32,768 and 32,767.
         /// The encoder has 24 indents per rotation.
         /// </summary>
-        public short GetCount()
+        public short GetTurnCount()
         {
             return _registerAccess.ReadRegister<short>(Register.Count);
         }
@@ -24,27 +24,27 @@ namespace Iot.Device.QwiicTwist
         /// Value between -32,768 and 32,767.
         /// The encoder has 24 indents per rotation.
         /// </summary>
-        public void SetCount(short amount)
+        public void SetTurnCount(short amount)
         {
             _registerAccess.WriteRegister(Register.Count, amount);
         }
 
         /// <summary>
-        /// Returns the limit of allowed counts before wrapping.
+        /// Returns the limit of allowed turn counts before wrapping.
         /// Value between 0 and 65,535.
         /// 0 means disabled.
         /// </summary>
-        public ushort GetLimit()
+        public ushort GetTurnLimit()
         {
             return _registerAccess.ReadRegister<ushort>(Register.Limit);
         }
 
         /// <summary>
-        /// Sets the limit of what the encoder will go to, then wrap to 0.
+        /// Sets the limit of turn counts the encoder will go to, then wrap to 0.
         /// Value between 0 and 65,535.
         /// Set to 0 to disable. TODO: What happens then?
         /// </summary>
-        public void SetLimit(ushort amount)
+        public void SetTurnLimit(ushort amount)
         {
             _registerAccess.WriteRegister(Register.Limit, amount);
         }
@@ -59,6 +59,25 @@ namespace Iot.Device.QwiicTwist
             status.IsEncoderTurned = false;
             _registerAccess.WriteRegister(Register.Status, status.StatusRegisterValue); // We've read this status bit, now clear it
             return isEncoderTurned;
+        }
+
+        /// <summary>
+        /// Returns the number of indents the user has turned the knob since last movement.
+        /// Value between -32,768 and 32,767.
+        /// The encoder has 24 indents per rotation.
+        /// By default, clears the current value.
+        /// If called when no event has occurred then returns ??? TODO
+        /// </summary>
+        /// <param name="clearValue"><see langword="true"/> if the value should subsequently be cleared; <see langword="false"/> otherwise.</param>
+        public short GetTurnsSinceLastMovement(bool clearValue = true)
+        {
+            var difference = _registerAccess.ReadRegister<short>(Register.Difference);
+            if (clearValue)
+            {
+                _registerAccess.WriteRegister<short>(Register.Difference, 0);
+            }
+
+            return difference;
         }
 
         /// <summary>
@@ -96,19 +115,5 @@ namespace Iot.Device.QwiicTwist
         {
             _registerAccess.WriteRegister(Register.TurnInterruptTimeout, timeout);
         }
-
-        /*
-        //Returns the number of ticks since last check
-        int16_t TWIST::getDiff(boolean clearValue)
-        {
-            int16_t difference = readRegister16(TWIST_DIFFERENCE);
-
-            //Clear the current value if requested
-            if (clearValue == true)
-                writeRegister16(TWIST_DIFFERENCE, 0);
-
-            return (difference);
-        }
-        */
     }
 }
