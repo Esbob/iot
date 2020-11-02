@@ -8,13 +8,11 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
 {
     internal struct InterruptConfigBitField
     {
-        // const byte enableInterruptButtonBit = 1;
-        // const byte enableInterruptEncoderBit = 0;
         [Flags]
         private enum InterruptConfigBits
         {
-            ClickedEnable = 1,
-            PressedEnable = 2
+            EnableEncoder = 1, // Bit 0
+            EnableButton = 2 // Bit 1
         }
 
         private InterruptConfigBits _interruptConfigValue;
@@ -27,23 +25,23 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
         public byte InterruptConfigValue => (byte)_interruptConfigValue;
 
         /// <summary>
-        /// Set to true to enable an interrupt when the button is clicked.
-        /// Defaults to false.
+        /// Set to true to enable an interrupt when the encoder is turned.
+        /// Defaults to true.
         /// </summary>
-        public bool ClickedEnable
+        public bool EnableEncoder
         {
-            get { return FlagsHelper.IsSet(_interruptConfigValue, InterruptConfigBits.ClickedEnable); }
-            set { FlagsHelper.SetValue(ref _interruptConfigValue, InterruptConfigBits.ClickedEnable, value); }
+            get { return FlagsHelper.IsSet(_interruptConfigValue, InterruptConfigBits.EnableEncoder); }
+            set { FlagsHelper.SetValue(ref _interruptConfigValue, InterruptConfigBits.EnableEncoder, value); }
         }
 
         /// <summary>
-        /// Set to true to enable an interrupt when the button is pressed.
-        /// Defaults to false.
+        /// Set to true to enable an interrupt when the button is pressed down. TODO: What about Clicked?
+        /// Defaults to true.
         /// </summary>
-        public bool PressedEnable
+        public bool EnableButton
         {
-            get { return FlagsHelper.IsSet(_interruptConfigValue, InterruptConfigBits.PressedEnable); }
-            set { FlagsHelper.SetValue(ref _interruptConfigValue, InterruptConfigBits.PressedEnable, value); }
+            get { return FlagsHelper.IsSet(_interruptConfigValue, InterruptConfigBits.EnableButton); }
+            set { FlagsHelper.SetValue(ref _interruptConfigValue, InterruptConfigBits.EnableButton, value); }
         }
     }
 }

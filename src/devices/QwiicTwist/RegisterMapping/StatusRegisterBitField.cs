@@ -14,12 +14,13 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
         // buttonClicked(2),
         // buttonInterrupt(1),
         // encoderInterrupt(0).
+        // 2 - button clicked, 1 - button pressed, 0 - encoder moved
         [Flags]
         private enum StatusRegisterBits
         {
-            EncoderTurned = 0,
-            ButtonPressedDown = 1,
-            ButtonClicked = 2
+            EncoderTurned = 1, // Bit 0
+            ButtonPressedDown = 2, // Bit 1
+            ButtonClicked = 4 // Bit 2
         }
 
         private StatusRegisterBits _statusRegisterValue;
