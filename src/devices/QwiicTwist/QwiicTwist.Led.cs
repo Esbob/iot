@@ -2,20 +2,24 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using Iot.Device.QwiicTwist.RegisterMapping;
+
 namespace Iot.Device.QwiicTwist
 {
-    /// <summary>
-    /// TODO
-    /// </summary>
     public sealed partial class QwiicTwist
     {
-        /*
-        //Sets the color of the encoder LEDs, 0-255
-        boolean TWIST::setColor(uint8_t red, uint8_t green, uint8_t blue)
+        /// <summary>
+        /// Sets the color of the encoder LED.
+        /// </summary>
+        /// <param name="red">Brightness of the red LED; value between 0 and 255.</param>
+        /// <param name="green">Brightness of the green LED; value between 0 and 255.</param>
+        /// <param name="blue">Brightness of the blue LED; value between 0 and 255.</param>
+        public void SetColor(byte red, byte green, byte blue)
         {
-            return (writeRegister24(TWIST_RED, (uint32_t)red << 16 | (uint32_t)green << 8 | blue));
+            _registerAccess.WriteRegister(Register.Red, (uint)red << 16 | (uint)green << 8 | blue);
         }
 
+        /*
         // Sets the red LED.
         // Value between 0 and 255 representing the brightness of
         // the red LED. Default is 255.
