@@ -19,31 +19,37 @@ namespace Iot.Device.QwiicTwist
             _registerAccess.WriteRegister(Register.Red, (uint)red << 16 | (uint)green << 8 | blue);
         }
 
+        /// <summary>
+        /// Sets the brightness of the red LED.
+        /// Value between 0 and 255.
+        /// Default is 255.
+        /// </summary>
+        public void SetRed(byte red)
+        {
+            _registerAccess.WriteRegister(Register.Red, red);
+        }
+
+        /// <summary>
+        /// Sets the brightness of the green LED.
+        /// Value between 0 and 255.
+        /// Default is 255.
+        /// </summary>
+        public void SetGreen(byte green)
+        {
+            _registerAccess.WriteRegister(Register.Green, green);
+        }
+
+        /// <summary>
+        /// Sets the brightness of the blue LED.
+        /// Value between 0 and 255.
+        /// Default is 255.
+        /// </summary>
+        public void SetBlue(byte blue)
+        {
+            _registerAccess.WriteRegister(Register.Blue, blue);
+        }
+
         /*
-        // Sets the red LED.
-        // Value between 0 and 255 representing the brightness of
-        // the red LED. Default is 255.
-        boolean TWIST::setRed(uint8_t red)
-        {
-            return (writeRegister(TWIST_RED, red));
-        }
-
-        // Sets the green LED.
-        // Value between 0 and 255 representing the brightness of
-        // the green LED. Default is 255.
-        boolean TWIST::setGreen(uint8_t green)
-        {
-            return (writeRegister(TWIST_GREEN, green));
-        }
-
-        // Sets the blue LED.
-        // Value between 0 and 255 representing the brightness of
-        // the blue LED. Default is 255.
-        boolean TWIST::setBlue(uint8_t blue)
-        {
-            return (writeRegister(TWIST_BLUE, blue));
-        }
-
         //Returns the current red value of the color
         uint8_t TWIST::getRed()
         {
