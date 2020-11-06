@@ -73,25 +73,27 @@ namespace Iot.Device.QwiicTwist
             return _registerAccess.ReadRegister<byte>(Register.Blue);
         }
 
-        /*
-        //Sets the relation between each color and the twisting of the knob
-        //This will connect the LED so it changes [amount] with each encoder tick
-        //Negative numbers are allowed (so LED gets brighter the more you turn the encoder down)
-        boolean TWIST::connectColor(int16_t red, int16_t green, int16_t blue)
+        /// <summary>
+        /// Sets the relation between each color and the turning of the knob.
+        /// This will connect the LED so it changes [amount] with each encoder tick.
+        /// Negative numbers are allowed: LED gets brighter the more the encoder is turned down.
+        /// </summary>
+        /// <param name="red">Value between -255 and 255 indicating the amount to change the red LED brightness with each tick movement of the encoder.
+        /// Default is 0.
+        /// </param>
+        /// <param name="green">Value between -255 and 255 indicating the amount to change the green LED brightness with each tick movement of the encoder.
+        /// Default is 0.
+        /// </param>
+        /// <param name="blue">Value between -255 and 255 indicating the amount to change the blue LED brightness with each tick movement of the encoder.
+        /// Default is 0.
+        /// </param>
+        public void ConnectColor(short red, short green, short blue)
         {
-            _i2cPort->beginTransmission((uint8_t)_deviceAddress);
-            _i2cPort->write(TWIST_CONNECT_RED); //Command
-            _i2cPort->write(red >> 8);          //MSB
-            _i2cPort->write(red & 0xFF);        //LSB
-            _i2cPort->write(green >> 8);        //MSB
-            _i2cPort->write(green & 0xFF);      //LSB
-            _i2cPort->write(blue >> 8);         //MSB
-            _i2cPort->write(blue & 0xFF);       //LSB
-            if (_i2cPort->endTransmission() != 0)
-                return (false); //Sensor did not ACK
-            return (true);
+            _registerAccess.WriteRegister(
+                Register.ConnectRed, (ulong)red >> 8 | (ulong)red & 0xFF | (ulong)green >> 8 | (ulong)green & 0xFF | (ulong)blue >> 8 | (ulong)blue & 0xFF);
         }
 
+        /*
         // Value between 255 and -255 indicating the amount to
         // change the red LED brightness with each tick movement
         // of the encoder. Default is 0.
