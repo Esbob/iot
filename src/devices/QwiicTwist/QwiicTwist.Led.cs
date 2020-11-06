@@ -49,25 +49,31 @@ namespace Iot.Device.QwiicTwist
             _registerAccess.WriteRegister(Register.Blue, blue);
         }
 
+        /// <summary>
+        /// Returns the current red value of the LED.
+        /// </summary>
+        public byte GetRed()
+        {
+            return _registerAccess.ReadRegister<byte>(Register.Red);
+        }
+
+        /// <summary>
+        /// Returns the current green value of the LED.
+        /// </summary>
+        public byte GetGreen()
+        {
+            return _registerAccess.ReadRegister<byte>(Register.Green);
+        }
+
+        /// <summary>
+        /// Returns the current blue value of the LED.
+        /// </summary>
+        public byte GetBlue()
+        {
+            return _registerAccess.ReadRegister<byte>(Register.Blue);
+        }
+
         /*
-        //Returns the current red value of the color
-        uint8_t TWIST::getRed()
-        {
-            return (readRegister(TWIST_RED));
-        }
-
-        //Returns the current green value of the color
-        uint8_t TWIST::getGreen()
-        {
-            return (readRegister(TWIST_GREEN));
-        }
-
-        //Returns the current blue value of the color
-        uint8_t TWIST::getBlue()
-        {
-            return (readRegister(TWIST_BLUE));
-        }
-
         //Sets the relation between each color and the twisting of the knob
         //This will connect the LED so it changes [amount] with each encoder tick
         //Negative numbers are allowed (so LED gets brighter the more you turn the encoder down)
