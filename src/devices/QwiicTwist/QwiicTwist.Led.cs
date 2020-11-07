@@ -93,31 +93,37 @@ namespace Iot.Device.QwiicTwist
                 Register.ConnectRed, (ulong)red >> 8 | (ulong)red & 0xFF | (ulong)green >> 8 | (ulong)green & 0xFF | (ulong)blue >> 8 | (ulong)blue & 0xFF);
         }
 
+        /// <summary>
+        /// Sets the amount to change the red LED brightness with each tick movement of the encoder.
+        /// Value between -255 and 255.
+        /// Default is 0.
+        /// </summary>
+        public void ConnectRed(short red)
+        {
+            _registerAccess.WriteRegister(Register.ConnectRed, red);
+        }
+
+        /// <summary>
+        /// Sets the amount to change the green LED brightness with each tick movement of the encoder.
+        /// Value between -255 and 255.
+        /// Default is 0.
+        /// </summary>
+        public void ConnectGreen(short green)
+        {
+            _registerAccess.WriteRegister(Register.ConnectGreen, green);
+        }
+
+        /// <summary>
+        /// Sets the amount to change the blue LED brightness with each tick movement of the encoder.
+        /// Value between -255 and 255.
+        /// Default is 0.
+        /// </summary>
+        public void ConnectBlue(short blue)
+        {
+            _registerAccess.WriteRegister(Register.ConnectBlue, blue);
+        }
+
         /*
-        // Value between 255 and -255 indicating the amount to
-        // change the red LED brightness with each tick movement
-        // of the encoder. Default is 0.
-        boolean TWIST::connectRed(int16_t red)
-        {
-            return (writeRegister16(TWIST_CONNECT_RED, red));
-        }
-
-        // Value between 255 and -255 indicating the amount to
-        // change the green LED brightness with each tick movement
-        // of the encoder. Default is 0.
-        boolean TWIST::connectGreen(int16_t green)
-        {
-            return (writeRegister16(TWIST_CONNECT_GREEN, green));
-        }
-
-        // Value between 255 and -255 indicating the amount to
-        // change the blue LED brightness with each tick movement
-        // of the encoder. Default is 0.
-        boolean TWIST::connectBlue(int16_t blue)
-        {
-            return (writeRegister16(TWIST_CONNECT_BLUE, blue));
-        }
-
         // Value between 255 and -255 indicating the amount to
         // change the red LED brightness with each tick movement
         // of the encoder.

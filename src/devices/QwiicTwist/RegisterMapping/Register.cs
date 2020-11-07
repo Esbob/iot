@@ -22,8 +22,8 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
         Green = 0x0E,
         Blue = 0x0F,
         ConnectRed = 0x10,
-        TWIST_CONNECT_GREEN = 0x12,
-        TWIST_CONNECT_BLUE = 0x14,
+        ConnectGreen = 0x12,
+        ConnectBlue = 0x14,
         TurnInterruptTimeout = 0x16,
         I2cAddress = 0x18,
         Limit = 0x19
