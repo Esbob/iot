@@ -123,30 +123,34 @@ namespace Iot.Device.QwiicTwist
             _registerAccess.WriteRegister(Register.ConnectBlue, blue);
         }
 
-        /*
-        // Value between 255 and -255 indicating the amount to
-        // change the red LED brightness with each tick movement
-        // of the encoder.
-        int16_t TWIST::getRedConnect()
+        /// <summary>
+        /// Returns the amount to change the red LED brightness with each tick movement of the encoder.
+        /// Value between -255 and 255.
+        /// Default is 0.
+        /// </summary>
+        public short GetRedConnect()
         {
-            return (readRegister16(TWIST_CONNECT_RED));
+            return _registerAccess.ReadRegister<short>(Register.ConnectRed);
         }
 
-        // Value between 255 and -255 indicating the amount to
-        // change the green LED brightness with each tick movement
-        // of the encoder.
-        int16_t TWIST::getGreenConnect()
+        /// <summary>
+        /// Returns the amount to change the green LED brightness with each tick movement of the encoder.
+        /// Value between -255 and 255.
+        /// Default is 0.
+        /// </summary>
+        public short GetGreenConnect()
         {
-            return (readRegister16(TWIST_CONNECT_GREEN));
+            return _registerAccess.ReadRegister<short>(Register.ConnectGreen);
         }
 
-        // Value between 255 and -255 indicating the amount to
-        // change the blue LED brightness with each tick movement
-        // of the encoder.
-        int16_t TWIST::getBlueConnect()
+        /// <summary>
+        /// Returns the amount to change the blue LED brightness with each tick movement of the encoder.
+        /// Value between -255 and 255.
+        /// Default is 0.
+        /// </summary>
+        public short GetBlueConnect()
         {
-            return (readRegister16(TWIST_CONNECT_BLUE));
+            return _registerAccess.ReadRegister<short>(Register.ConnectBlue);
         }
-        */
     }
 }
