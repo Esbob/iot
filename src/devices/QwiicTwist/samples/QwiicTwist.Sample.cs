@@ -78,11 +78,11 @@ namespace Iot.Device.QwiicTwist.Samples
 
         private static byte GetDeviceAddress()
         {
-            Console.WriteLine("Enter Qwiic Twist I2C address as decimal number: [Press Enter for default = 111]");
+            Console.WriteLine("Enter Qwiic Twist I2C address as decimal number: [Press Enter for default = 63]");
             string deviceAddress = Console.ReadLine();
             if (string.IsNullOrWhiteSpace(deviceAddress))
             {
-                deviceAddress = "111";
+                deviceAddress = "63";
             }
 
             Console.WriteLine("Using address " + deviceAddress);

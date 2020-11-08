@@ -8,13 +8,6 @@ namespace Iot.Device.QwiicTwist.RegisterMapping
 {
     internal struct StatusRegisterBitField
     {
-        // TODO
-        // If doesn't work, from docs:
-        // buttonPressed(3),
-        // buttonClicked(2),
-        // buttonInterrupt(1),
-        // encoderInterrupt(0).
-        // 2 - button clicked, 1 - button pressed, 0 - encoder moved
         [Flags]
         private enum StatusRegisterBits
         {

@@ -34,7 +34,12 @@ namespace Iot.Device.QwiicTwist.Samples
                         Console.WriteLine("The knob is not pressed anymore!");
                     }
 
-                    Thread.Sleep(20); // Don't hammer too hard on the I2c bus
+                    if (twist.IsClicked())
+                    {
+                        Console.WriteLine("The knob was clicked (pressed down and released)!");
+                    }
+
+                    Thread.Sleep(100); // Don't hammer too hard on the I2c bus
                 }
             }
             while (Console.ReadKey(true).Key != ConsoleKey.Escape);

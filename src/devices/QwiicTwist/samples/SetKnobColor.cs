@@ -38,79 +38,79 @@ namespace Iot.Device.QwiicTwist.Samples
 
             do
             {
-                while (Console.KeyAvailable)
+                while (Console.KeyAvailable == false)
                 {
-                    var key = Console.ReadKey();
-
-                    switch (key.Key)
-                    {
-                        case ConsoleKey.D1:
-                        {
-                            redValue = DecreaseValueIfNotMin(redValue);
-                            twist.SetRed(redValue);
-                            Console.WriteLine($"Red color value set to {redValue}");
-                            break;
-                        }
-
-                        case ConsoleKey.D2:
-                        {
-                            redValue = IncreaseValueIfNotMax(redValue);
-                            twist.SetRed(redValue);
-                            Console.WriteLine($"Red color value set to {redValue}");
-                            break;
-                        }
-
-                        case ConsoleKey.D3:
-                        {
-                            greenValue = DecreaseValueIfNotMin(greenValue);
-                            twist.SetGreen(greenValue);
-                            Console.WriteLine($"Green color value set to {greenValue}");
-                            break;
-                        }
-
-                        case ConsoleKey.D4:
-                        {
-                            greenValue = IncreaseValueIfNotMax(greenValue);
-                            twist.SetGreen(greenValue);
-                            Console.WriteLine($"Green color value set to {greenValue}");
-                            break;
-                        }
-
-                        case ConsoleKey.D5:
-                        {
-                            blueValue = DecreaseValueIfNotMin(blueValue);
-                            twist.SetBlue(blueValue);
-                            Console.WriteLine($"Blue color value set to {blueValue}");
-                            break;
-                        }
-
-                        case ConsoleKey.D6:
-                        {
-                            blueValue = IncreaseValueIfNotMax(blueValue);
-                            twist.SetBlue(blueValue);
-                            Console.WriteLine($"Blue color value set to {blueValue}");
-                            break;
-                        }
-
-                        case ConsoleKey.D7:
-                        {
-                            twist.SetColor(255, 255, 255);
-                            Console.WriteLine($"Red/green/blue set to 255");
-                            break;
-                        }
-
-                        case ConsoleKey.D8:
-                        {
-                            twist.SetColor(0, 0, 0);
-                            Console.WriteLine($"Red/green/blue set to 0");
-                            break;
-                        }
-                    }
-
-                    Thread.Sleep(20); // Don't hammer too hard on the I2c bus
+                   Thread.Sleep(10);
                 }
 
-                Thread.Sleep(50);
+                var key = Console.ReadKey();
+
+                switch (key.Key)
+                {
+                    case ConsoleKey.D1:
+                    {
+                        redValue = DecreaseValueIfNotMin(redValue);
+                        twist.SetRed(redValue);
+                        Console.WriteLine($"Red color value set to {redValue}");
+                        break;
+                    }
+
+                    case ConsoleKey.D2:
+                    {
+                        redValue = IncreaseValueIfNotMax(redValue);
+                        twist.SetRed(redValue);
+                        Console.WriteLine($"Red color value set to {redValue}");
+                        break;
+                    }
+
+                    case ConsoleKey.D3:
+                    {
+                        greenValue = DecreaseValueIfNotMin(greenValue);
+                        twist.SetGreen(greenValue);
+                        Console.WriteLine($"Green color value set to {greenValue}");
+                        break;
+                    }
+
+                    case ConsoleKey.D4:
+                    {
+                        greenValue = IncreaseValueIfNotMax(greenValue);
+                        twist.SetGreen(greenValue);
+                        Console.WriteLine($"Green color value set to {greenValue}");
+                        break;
+                    }
+
+                    case ConsoleKey.D5:
+                    {
+                        blueValue = DecreaseValueIfNotMin(blueValue);
+                        twist.SetBlue(blueValue);
+                        Console.WriteLine($"Blue color value set to {blueValue}");
+                        break;
+                    }
+
+                    case ConsoleKey.D6:
+                    {
+                        blueValue = IncreaseValueIfNotMax(blueValue);
+                        twist.SetBlue(blueValue);
+                        Console.WriteLine($"Blue color value set to {blueValue}");
+                        break;
+                    }
+
+                    case ConsoleKey.D7:
+                    {
+                        twist.SetColor(255, 255, 255);
+                        Console.WriteLine($"Red/green/blue set to 255");
+                        break;
+                    }
+
+                    case ConsoleKey.D8:
+                    {
+                        twist.SetColor(0, 0, 0);
+                        Console.WriteLine($"Red/green/blue set to 0");
+                        break;
+                    }
+                }
+
+                Thread.Sleep(20); // Don't hammer too hard on the I2c bus
             }
             while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }
