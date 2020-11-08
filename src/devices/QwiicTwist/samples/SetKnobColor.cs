@@ -17,20 +17,20 @@ namespace Iot.Device.QwiicTwist.Samples
             Console.WriteLine("Set knob color sample started - press ESC to stop");
             Console.WriteLine("-------------------------------------------------");
             Console.WriteLine("### Red color ###");
-            Console.WriteLine("Press 1 to decrease red color value");
-            Console.WriteLine("Press 2 to increase red color value");
+            Console.WriteLine("Press 1 to decrease red color value (min is 0)");
+            Console.WriteLine("Press 2 to increase red color value (max is 255)");
             Console.WriteLine();
             Console.WriteLine("### Green color ###");
-            Console.WriteLine("Press 3 to decrease green color value");
-            Console.WriteLine("Press 4 to increase green color value");
+            Console.WriteLine("Press 3 to decrease green color value (min is 0)");
+            Console.WriteLine("Press 4 to increase green color value (max is 255)");
             Console.WriteLine();
             Console.WriteLine("### Blue color ###");
-            Console.WriteLine("Press 5 to decrease blue color value");
-            Console.WriteLine("Press 6 to increase blue color value");
+            Console.WriteLine("Press 5 to decrease blue color value (min is 0)");
+            Console.WriteLine("Press 6 to increase blue color value (max is 255)");
             Console.WriteLine();
             Console.WriteLine("### All three colors ###");
-            Console.WriteLine("Press 7 to reset to default color (R:255, G:255, B:255)");
-            Console.WriteLine("Press 8 to switch off LED (R:0, G:0, B:0)");
+            Console.WriteLine("Press 7 to reset to default color");
+            Console.WriteLine("Press 8 to switch off LED");
 
             byte redValue = 255;
             byte greenValue = 255;
@@ -48,6 +48,7 @@ namespace Iot.Device.QwiicTwist.Samples
                         {
                             redValue = DecreaseValueIfNotMin(redValue);
                             twist.SetRed(redValue);
+                            Console.WriteLine($"Red color value set to {redValue}");
                             break;
                         }
 
@@ -55,6 +56,7 @@ namespace Iot.Device.QwiicTwist.Samples
                         {
                             redValue = IncreaseValueIfNotMax(redValue);
                             twist.SetRed(redValue);
+                            Console.WriteLine($"Red color value set to {redValue}");
                             break;
                         }
 
@@ -62,6 +64,7 @@ namespace Iot.Device.QwiicTwist.Samples
                         {
                             greenValue = DecreaseValueIfNotMin(greenValue);
                             twist.SetGreen(greenValue);
+                            Console.WriteLine($"Green color value set to {greenValue}");
                             break;
                         }
 
@@ -69,6 +72,7 @@ namespace Iot.Device.QwiicTwist.Samples
                         {
                             greenValue = IncreaseValueIfNotMax(greenValue);
                             twist.SetGreen(greenValue);
+                            Console.WriteLine($"Green color value set to {greenValue}");
                             break;
                         }
 
@@ -76,6 +80,7 @@ namespace Iot.Device.QwiicTwist.Samples
                         {
                             blueValue = DecreaseValueIfNotMin(blueValue);
                             twist.SetBlue(blueValue);
+                            Console.WriteLine($"Blue color value set to {blueValue}");
                             break;
                         }
 
@@ -83,24 +88,29 @@ namespace Iot.Device.QwiicTwist.Samples
                         {
                             blueValue = IncreaseValueIfNotMax(blueValue);
                             twist.SetBlue(blueValue);
+                            Console.WriteLine($"Blue color value set to {blueValue}");
                             break;
                         }
 
                         case ConsoleKey.D7:
                         {
                             twist.SetColor(255, 255, 255);
+                            Console.WriteLine($"Red/green/blue set to 255");
                             break;
                         }
 
                         case ConsoleKey.D8:
                         {
                             twist.SetColor(0, 0, 0);
+                            Console.WriteLine($"Red/green/blue set to 0");
                             break;
                         }
                     }
 
                     Thread.Sleep(20); // Don't hammer too hard on the I2c bus
                 }
+
+                Thread.Sleep(50);
             }
             while (Console.ReadKey(true).Key != ConsoleKey.Escape);
         }

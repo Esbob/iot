@@ -37,6 +37,9 @@ namespace Iot.Device.QwiicTwist.Samples
                     case 2:
                         PrintTwistStatus.Run(twist);
                         break;
+                    case 3:
+                        SetKnobColor.Run(twist);
+                        break;
                     // case 3:
                     //    new PrintButtonStatusInterruptBased().Run(twist);
                     //    break;
@@ -105,6 +108,7 @@ namespace Iot.Device.QwiicTwist.Samples
             Console.WriteLine();
             Console.WriteLine("1. Print Twist configuration");
             Console.WriteLine("2. Print Twist status");
+            Console.WriteLine("3. Set knob color");
             // Console.WriteLine("3. Print button status - interrupt based");
             // Console.WriteLine("4. Light when button pressed");
             // Console.WriteLine("5. Pulse when button pressed");
