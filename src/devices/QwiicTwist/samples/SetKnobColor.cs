@@ -45,7 +45,7 @@ namespace Iot.Device.QwiicTwist.Samples
                    Thread.Sleep(10);
                 }
 
-                var key = Console.ReadKey();
+                var key = Console.ReadKey(true);
 
                 switch (key.Key)
                 {
