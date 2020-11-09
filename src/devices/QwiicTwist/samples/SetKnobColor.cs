@@ -32,9 +32,11 @@ namespace Iot.Device.QwiicTwist.Samples
             Console.WriteLine("Press 7 to reset to default color");
             Console.WriteLine("Press 8 to switch off LED");
 
-            byte redValue = 255;
-            byte greenValue = 255;
-            byte blueValue = 255;
+            byte redValue = 0;
+            byte greenValue = 0;
+            byte blueValue = 0;
+
+            twist.SetColor(0, 0, 0); // Switch off LED
 
             do
             {
@@ -98,14 +100,14 @@ namespace Iot.Device.QwiicTwist.Samples
                     case ConsoleKey.D7:
                     {
                         twist.SetColor(255, 255, 255);
-                        Console.WriteLine($"Red/green/blue set to 255");
+                        Console.WriteLine("Red/green/blue set to 255");
                         break;
                     }
 
                     case ConsoleKey.D8:
                     {
                         twist.SetColor(0, 0, 0);
-                        Console.WriteLine($"Red/green/blue set to 0");
+                        Console.WriteLine("Red/green/blue set to 0");
                         break;
                     }
                 }
